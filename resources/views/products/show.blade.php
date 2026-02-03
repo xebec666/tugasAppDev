@@ -104,12 +104,23 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="w-full md:w-auto px-8 py-4 bg-gradient-to-r from-primary to-primary-dark text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all transform flex items-center justify-center space-x-2">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                                    </svg>
-                                    <span>Beli Sekarang / Bayar</span>
-                                </button>
+                                <div class="flex space-x-4">
+                                    <button type="button" 
+                                            onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }}, '{{ $product->image ? asset('storage/' . $product->image) : '' }}')"
+                                            class="flex-1 px-8 py-4 bg-white border-2 border-primary text-primary font-bold rounded-xl shadow-lg hover:bg-green-50 hover:scale-105 transition-all transform flex items-center justify-center space-x-2">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        </svg>
+                                        <span>Tambah Keranjang</span>
+                                    </button>
+
+                                    <button type="submit" class="flex-1 px-8 py-4 bg-gradient-to-r from-primary to-primary-dark text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all transform flex items-center justify-center space-x-2">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path> 
+                                        </svg>
+                                        <span>Beli Sekarang</span>
+                                    </button>
+                                </div>
                                 <p class="text-xs text-gray-500 mt-2 text-center md:text-left">
                                     *Pembayaran instan (Simple Payment)
                                 </p>
@@ -169,6 +180,31 @@
             if (value > 1) {
                 input.value = value - 1;
             }
+        }
+
+        function addToCart(id, name, price, image) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const qtyInput = document.getElementById('quantity');
+            const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: quantity
+                });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Visual feedback
+            alert('Produk berhasil ditambahkan ke keranjang!');
         }
     </script>
 </body>

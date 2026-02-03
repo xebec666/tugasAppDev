@@ -39,8 +39,10 @@ Route::middleware('auth')->group(function () {
     
     // Transactions
     Route::get('/user/transactions', [App\Http\Controllers\User\TransactionController::class, 'index'])->name('user.transactions.index');
+    Route::get('/user/transactions/create', [App\Http\Controllers\User\TransactionController::class, 'create'])->name('user.transactions.create');
     Route::post('/user/transactions', [App\Http\Controllers\User\TransactionController::class, 'store'])->name('user.transactions.store');
     Route::get('/user/transactions/{transaction}', [App\Http\Controllers\User\TransactionController::class, 'show'])->name('user.transactions.show');
+    Route::get('/user/transactions/{transaction}/payment', [App\Http\Controllers\User\TransactionController::class, 'payment'])->name('user.transactions.payment');
     
     // Admin Routes
     Route::middleware('admin')->group(function () {

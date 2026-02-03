@@ -171,24 +171,28 @@
                 <!-- Product Card -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition flex flex-col h-full">
                     <div class="relative h-48 mb-4 overflow-hidden rounded-xl">
-                        @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
-                        @else
-                            <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
-                                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            </div>
-                        @endif
+                        <a href="{{ route('products.show', $product->id) }}">
+                            @if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                            @else
+                                <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
+                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                </div>
+                            @endif
+                        </a>
                     </div>
                     
-                    <h3 class="text-lg font-semibold text-gray-800 mb-1 line-clamp-1" title="{{ $product->name }}">{{ $product->name }}</h3>
+                    <a href="{{ route('products.show', $product->id) }}">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-1 line-clamp-1" title="{{ $product->name }}">{{ $product->name }}</h3>
+                    </a>
                     <p class="text-sm text-gray-500 mb-3 line-clamp-2 min-h-[40px]">{{ $product->description }}</p>
                     
                     <div class="mt-auto flex items-center justify-between">
                         <span class="text-xl font-bold text-gray-800">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                         <div class="flex items-center space-x-2">
-                             <input type="number" min="1" value="1" class="w-12 text-center border border-gray-300 rounded-lg py-1 focus:ring-green-500 focus:border-green-500">
-                            <!-- Placeholder for Add to Cart functionality -->
-                            <button class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
+                             <input type="number" id="qty-{{ $product->id }}" min="1" value="1" class="w-12 text-center border border-gray-300 rounded-lg py-1 focus:ring-green-500 focus:border-green-500">
+                            <!-- Add to Cart functionality -->
+                            <button onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }}, '{{ $product->image ? asset('storage/' . $product->image) : '' }}')" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                 </svg>
@@ -419,12 +423,12 @@
                     </div>
                     
                     @auth
-                        <button class="w-full py-4 bg-green-500 text-white rounded-xl font-bold text-lg hover:bg-green-600 shadow-lg transform active:scale-95 transition-all flex items-center justify-center">
+                        <a href="{{ route('user.transactions.create') }}" class="flex w-full py-4 bg-green-500 text-white rounded-xl font-bold text-lg hover:bg-green-600 shadow-lg transform active:scale-95 transition-all items-center justify-center">
                             Checkout Sekarang
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                             </svg>
-                        </button>
+                        </a>
                     @else
                         <a href="{{ route('login') }}" class="block w-full py-4 bg-gray-800 text-white text-center rounded-xl font-bold text-lg hover:bg-gray-700 shadow-lg transform active:scale-95 transition-all">
                             Login untuk Checkout
@@ -436,30 +440,144 @@
     </div>
 
     <script>
+        // Store cart in localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         function toggleCart() {
             const sidebar = document.getElementById('cart-sidebar');
             const panel = document.getElementById('cart-panel');
             
             if (sidebar.classList.contains('hidden')) {
-                // Open
                 sidebar.classList.remove('hidden');
-                // Small delay to allow display:block to apply before transition
                 setTimeout(() => {
                     panel.classList.remove('translate-x-full');
                 }, 10);
+                updateCartUI();
             } else {
-                // Close
                 panel.classList.add('translate-x-full');
                 setTimeout(() => {
                     sidebar.classList.add('hidden');
-                }, 300); // Match transition duration
+                }, 300);
             }
         }
-        
-        // Example Function to Update Cart Count (To be implemented with real logic)
-        function updateCartCount(count) {
+
+        function addToCart(id, name, price, image) {
+            const qtyInput = document.getElementById(`qty-${id}`);
+            const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: quantity
+                });
+            }
+
+            saveCart();
+            updateCartCount();
+            
+            // Visual feedback
+            const btn = event.currentTarget;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = `<svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+            }, 1000);
+            
+            // Optional: Open cart
+             toggleCart();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-count').innerText = count;
         }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const subtotalEl = document.getElementById('cart-subtotal');
+            const taxEl = document.getElementById('cart-tax');
+            const totalEl = document.getElementById('cart-total');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10 text-gray-500">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <p class="text-lg font-medium">Keranjang Anda kosong</p>
+                        <p class="text-sm">Yuk mulai belanja kebutuhan harianmu!</p>
+                    </div>`;
+                subtotalEl.innerText = 'Rp 0';
+                taxEl.innerText = 'Rp 0';
+                totalEl.innerText = 'Rp 0';
+                return;
+            }
+
+            let subtotal = 0;
+            container.innerHTML = cart.map((item, index) => {
+                subtotal += item.price * item.quantity;
+                return `
+                <div class="flex items-center space-x-4 p-3 bg-gray-50 rounded-xl">
+                    <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center overflow-hidden border border-gray-200">
+                        ${item.image ? `<img src="${item.image}" class="w-full h-full object-cover">` : 
+                        `<svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`}
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-gray-800 line-clamp-1">${item.name}</h4>
+                        <p class="text-green-600 font-bold text-sm">Rp ${item.price.toLocaleString('id-ID')}</p>
+                        <div class="flex items-center space-x-2 mt-2">
+                            <button onclick="updateQty(${index}, -1)" class="w-6 h-6 rounded-full bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-100 text-xs">-</button>
+                            <span class="text-sm font-medium w-6 text-center">${item.quantity}</span>
+                            <button onclick="updateQty(${index}, 1)" class="w-6 h-6 rounded-full bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-100 text-xs">+</button>
+                        </div>
+                    </div>
+                    <button onclick="removeItem(${index})" class="text-gray-400 hover:text-red-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                `;
+            }).join('');
+
+            const tax = subtotal * 0.11;
+            const total = subtotal + tax;
+
+            subtotalEl.innerText = 'Rp ' + subtotal.toLocaleString('id-ID');
+            taxEl.innerText = 'Rp ' + tax.toLocaleString('id-ID');
+            totalEl.innerText = 'Rp ' + total.toLocaleString('id-ID');
+        }
+
+        function updateQty(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity < 1) cart[index].quantity = 1;
+            saveCart();
+            updateCartUI();
+            updateCartCount();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+            updateCartCount();
+        }
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+        });
     </script>
 </body>
 </html>
