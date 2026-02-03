@@ -43,12 +43,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/transactions', [App\Http\Controllers\User\TransactionController::class, 'store'])->name('user.transactions.store');
     Route::get('/user/transactions/{transaction}', [App\Http\Controllers\User\TransactionController::class, 'show'])->name('user.transactions.show');
     Route::get('/user/transactions/{transaction}/payment', [App\Http\Controllers\User\TransactionController::class, 'payment'])->name('user.transactions.payment');
+    Route::post('/user/transactions/{transaction}/confirm-payment', [App\Http\Controllers\User\TransactionController::class, 'confirmPayment'])->name('user.transactions.confirm-payment');
     
     // Admin Routes
-    Route::middleware('admin')->group(function () {
-        Route::get('/admin/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
-        Route::resource('/admin/products', App\Http\Controllers\Admin\ProductController::class, ['names' => 'admin.products']);
-        Route::get('/admin/transactions', [App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('admin.transactions.index');
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('/products', App\Http\Controllers\Admin\ProductController::class);
+        Route::get('/orders', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
+        Route::patch('/orders/{order}/status', [App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.updateStatus');
     });
 
     // Profile Routes

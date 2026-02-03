@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function index()
     {
         // Fetch 4 latest products for the "Popular Product" section
-        $products = Product::latest()->take(4)->get();
+        $products = Product::withAvg('reviews', 'rating')->latest()->take(4)->get();
 
         return view('welcome', compact('products'));
     }

@@ -53,7 +53,7 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Nama Penerima</label>
-                                <input type="text" name="receiver_name" value="{{ Auth::user()->name }}" required
+                                <input type="text" name="receiver_name" value="{{ Auth::user()->username }}" required
                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
                             </div>
                             <div>
@@ -66,6 +66,30 @@
                                 <textarea name="shipping_address" rows="3" required
                                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary"></textarea>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Metode Pembayaran -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Metode Pembayaran</h2>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <label class="relative flex flex-col items-center p-4 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-green-50">
+                                <input type="radio" name="payment_method" value="bank" required class="sr-only">
+                                <svg class="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                <span class="font-medium text-gray-900">Transfer Bank</span>
+                            </label>
+
+                            <label class="relative flex flex-col items-center p-4 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-green-50">
+                                <input type="radio" name="payment_method" value="cod" class="sr-only">
+                                <svg class="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                <span class="font-medium text-gray-900">COD</span>
+                            </label>
+
+                            <label class="relative flex flex-col items-center p-4 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-primary transition-all has-[:checked]:border-primary has-[:checked]:bg-green-50">
+                                <input type="radio" name="payment_method" value="qris" class="sr-only">
+                                <svg class="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                                <span class="font-medium text-gray-900">QRIS</span>
+                            </label>
                         </div>
                     </div>
 
@@ -103,8 +127,12 @@
     </div>
 
     <script>
-        // Load cart from localStorage
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // Get current user ID from Laravel
+        const currentUserId = {{ Auth::id() }};
+        const cartKey = currentUserId ? `cart_${currentUserId}` : null;
+        
+        // Load cart from localStorage with user-specific key
+        const cart = cartKey ? (JSON.parse(localStorage.getItem(cartKey)) || []) : [];
 
         function renderCheckoutItems() {
             const container = document.getElementById('checkoutCartItems');
@@ -153,12 +181,10 @@
             // Put cart data into hidden input
             document.getElementById('cartDataInput').value = JSON.stringify(cart);
             
-            // Allow form submission...
-            // After submission, we might want to clear cart, but since PHP handles the redirect, 
-            // we can clear it on the success page or here if we use AJAX. 
-            // For standard form post, we can't easily clear it *after* success unless we utilize session flash checking on next page load.
-            // For now, let's keep it simple.
-            localStorage.removeItem('cart'); // Optimistic clear
+            // Clear cart after successful checkout
+            if (cartKey) {
+                localStorage.removeItem(cartKey);
+            }
         }
 
         document.addEventListener('DOMContentLoaded', renderCheckoutItems);

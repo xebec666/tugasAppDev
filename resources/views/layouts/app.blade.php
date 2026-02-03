@@ -11,7 +11,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="">
+            <a class="navbar-brand" href="{{ route('home') }}">
                 <i class="fas fa-leaf"></i> Healthy Store
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -25,15 +25,15 @@
                         </li>
                         @if(auth()->user()->role === 'admin')
                             <li class="nav-item">
-                                <a class="nav-link" href="">Dashboard Admin</a>
+                                <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard Admin</a>
                             </li>
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="">Dashboard</a>
+                                <a class="nav-link" href="{{ route('user.dashboard') }}">Dashboard</a>
                             </li>
                         @endif
                         <li class="nav-item">
-                            <a class="nav-link" href="">Profil</a>
+                            <a class="nav-link" href="{{ route('profile.edit') }}">Profil</a>
                         </li>
                         <li class="nav-item">
                             <form method="GET" action="{{ route('logout') }}" style="display: inline;">
@@ -43,10 +43,10 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="">Login</a>
+                            <a class="nav-link" href="{{ route('login') }}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Daftar</a>
+                            <a class="nav-link" href="{{ route('register') }}">Daftar</a>
                         </li>
                     @endauth
                 </ul>

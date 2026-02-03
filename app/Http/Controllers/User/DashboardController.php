@@ -5,23 +5,23 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Transaction;
+use App\Models\Order;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        $transactions = $user->transactions()->latest()->take(5)->get();
+        $transactions = $user->orders()->latest()->take(5)->get();
         $notifications = $user->notifications()->take(5)->get();
         
         // Stats
-        $pendingOrderCount = $user->transactions()->where('status', 'pending')->count();
-        $processingOrderCount = $user->transactions()->where('status', 'processing')->count(); // Assuming 'processing' status exists or map appropriately
-        $shippedOrderCount = $user->transactions()->where('status', 'shipped')->count();
-        $completedOrderCount = $user->transactions()->where('status', 'completed')->count();
+        $pendingOrderCount = $user->orders()->where('status', 'pending')->count();
+        $processingOrderCount = $user->orders()->where('status', 'processing')->count();
+        $shippedOrderCount = $user->orders()->where('status', 'shipped')->count();
+        $completedOrderCount = $user->orders()->where('status', 'completed')->count();
         
-        $totalSpent = $user->transactions()->where('status', 'completed')->sum('total_price');
+        $totalSpent = $user->orders()->where('status', 'completed')->sum('total_price');
 
         return view('user.dashboard', compact(
             'user', 

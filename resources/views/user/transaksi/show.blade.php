@@ -62,10 +62,10 @@
                         </div>
                         <div class="flex-1">
                             <h3 class="text-gray-900 font-medium">{{ $item->product->name }}</h3>
-                            <p class="text-sm text-gray-500">{{ $item->quantity }} x Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                            <p class="text-sm text-gray-500">{{ $item->qty }} x Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                         </div>
                         <div class="text-right font-medium text-gray-900">
-                            Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}
+                            Rp {{ number_format($item->price * $item->qty, 0, ',', '.') }}
                         </div>
                     </div>
                     @endforeach

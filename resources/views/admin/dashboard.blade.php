@@ -226,7 +226,7 @@
                 <i class="fas fa-box"></i>
                 <div class="menu-item-title">Kelola Produk</div>
             </a>
-            <a href="{{ route('admin.transactions.index') }}" class="menu-item">
+            <a href="{{ route('admin.orders.index') }}" class="menu-item">
                 <i class="fas fa-shopping-cart"></i>
                 <div class="menu-item-title">Kelola Pesanan</div>
             </a>

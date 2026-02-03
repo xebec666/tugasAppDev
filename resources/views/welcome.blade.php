@@ -98,63 +98,22 @@
                     </button>
                 </div>
             </div>
-            <div class="grid grid-cols-3 md:grid-cols-7 gap-6">
-                <div class="flex flex-col items-center text-center group cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-100 transition">
-                        <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Need A Hot</span>
-                </div>
-                <div class="flex flex-col items-center text-center group cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-100 transition">
-                        <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Vegetables</span>
-                </div>
-                <div class="flex flex-col items-center text-center group cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-100 transition">
-                        <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Medicine</span>
-                </div>
-                <div class="flex flex-col items-center text-center group cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-100 transition">
-                        <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Baby</span>
-                </div>
-                <div class="flex flex-col items-center text-center group cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-100 transition">
-                        <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Bakery</span>
-                </div>
-                <div class="flex flex-col items-center text-center group cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-100 transition">
-                        <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Beauty</span>
-                </div>
-                <div class="flex flex-col items-center text-center group cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-2 group-hover:bg-green-100 transition">
-                        <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                    <span class="text-sm font-medium text-gray-700">Grooming</span>
-                </div>
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                <a href="#" class="px-8 py-4 bg-green-500 rounded-full text-white font-semibold hover:bg-gray-100 hover:text-gray-700 transition-all shadow-sm hover:shadow-md text-center">
+                    Fish
+                </a>
+                <a href="#" class="px-8 py-4 bg-green-500 rounded-full text-white font-semibold hover:bg-gray-100 hover:text-gray-700 transition-all shadow-sm hover:shadow-md text-center">
+                    Chicken
+                </a>
+                <a href="#" class="px-8 py-4 bg-green-500 rounded-full text-white font-semibold hover:bg-gray-100 hover:text-gray-700 transition-all shadow-sm hover:shadow-md text-center">
+                    Beef
+                </a>
+                <a href="#" class="px-8 py-4 bg-green-500 rounded-full text-white font-semibold hover:bg-gray-100 hover:text-gray-700 transition-all shadow-sm hover:shadow-md text-center">
+                    Dairy-free
+                </a>
+                <a href="#" class="px-8 py-4 bg-green-500 rounded-full text-white font-semibold hover:bg-gray-100 hover:text-gray-700 transition-all shadow-sm hover:shadow-md text-center">
+                    Diabetes-Friendly & Gluten-free
+                </a>
             </div>
         </div>
     </section>
@@ -185,18 +144,33 @@
                     <a href="{{ route('products.show', $product->id) }}">
                         <h3 class="text-lg font-semibold text-gray-800 mb-1 line-clamp-1" title="{{ $product->name }}">{{ $product->name }}</h3>
                     </a>
+                    
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 text-xs">
+                            @for($i = 1; $i <= 5; $i++)
+                                <svg class="w-3 h-3 {{ $i <= round($product->reviews_avg_rating) ? 'fill-current' : 'text-gray-300' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                </svg>
+                            @endfor
+                        </div>
+                        <span class="text-xs text-gray-400 ml-1">({{ $product->reviews_avg_rating ? number_format($product->reviews_avg_rating, 1) : '0' }})</span>
+                    </div>
                     <p class="text-sm text-gray-500 mb-3 line-clamp-2 min-h-[40px]">{{ $product->description }}</p>
                     
                     <div class="mt-auto flex items-center justify-between">
                         <span class="text-xl font-bold text-gray-800">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                         <div class="flex items-center space-x-2">
-                             <input type="number" id="qty-{{ $product->id }}" min="1" value="1" class="w-12 text-center border border-gray-300 rounded-lg py-1 focus:ring-green-500 focus:border-green-500">
-                            <!-- Add to Cart functionality -->
-                            <button onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }}, '{{ $product->image ? asset('storage/' . $product->image) : '' }}')" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                </svg>
-                            </button>
+                            @if($product->stock > 0)
+                                <input type="number" id="qty-{{ $product->id }}" min="1" max="{{ $product->stock }}" value="1" class="w-12 text-center border border-gray-300 rounded-lg py-1 focus:ring-green-500 focus:border-green-500">
+                                <!-- Add to Cart functionality -->
+                                <button onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }}, '{{ $product->image ? asset('storage/' . $product->image) : '' }}', {{ $product->stock }})" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </button>
+                            @else
+                                <span class="text-xs text-red-600 font-semibold bg-red-50 px-3 py-1 rounded-full">Stok Habis</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -423,7 +397,7 @@
                     </div>
                     
                     @auth
-                        <a href="{{ route('user.transactions.create') }}" class="flex w-full py-4 bg-green-500 text-white rounded-xl font-bold text-lg hover:bg-green-600 shadow-lg transform active:scale-95 transition-all items-center justify-center">
+                        <a id="checkout-btn" href="{{ route('user.transactions.create') }}" class="flex w-full py-4 bg-green-500 text-white rounded-xl font-bold text-lg hover:bg-green-600 shadow-lg transform active:scale-95 transition-all items-center justify-center">
                             Checkout Sekarang
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -440,10 +414,18 @@
     </div>
 
     <script>
+        const currentUserId = {{ Auth::id() ?? 'null' }};
+        const cartKey = currentUserId ? `cart_${currentUserId}` : null;
+        
         // Store cart in localStorage
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let cart = cartKey ? (JSON.parse(localStorage.getItem(cartKey)) || []) : [];
 
         function toggleCart() {
+            if (!currentUserId) {
+                window.location.href = "{{ route('login') }}";
+                return;
+            }
+
             const sidebar = document.getElementById('cart-sidebar');
             const panel = document.getElementById('cart-panel');
             
@@ -461,22 +443,46 @@
             }
         }
 
-        function addToCart(id, name, price, image) {
+        function addToCart(id, name, price, image, stock) {
+            if (!currentUserId) {
+                window.location.href = "{{ route('login') }}";
+                return;
+            }
+
             const qtyInput = document.getElementById(`qty-${id}`);
-            const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+            const requestedQuantity = qtyInput ? parseInt(qtyInput.value) : 1;
 
             const existingItem = cart.find(item => item.id === id);
             
             if (existingItem) {
-                existingItem.quantity += quantity;
+                const totalQuantity = existingItem.quantity + requestedQuantity;
+                if (totalQuantity > stock) {
+                    alert(`Stok tidak mencukupi. Maksimal stok yang bisa dipesan adalah ${stock}.`);
+                    existingItem.quantity = stock;
+                } else {
+                    existingItem.quantity = totalQuantity;
+                }
             } else {
-                cart.push({
-                    id: id,
-                    name: name,
-                    price: price,
-                    image: image,
-                    quantity: quantity
-                });
+                if (requestedQuantity > stock) {
+                    alert(`Stok tidak mencukupi. Maksimal stok yang bisa dipesan adalah ${stock}.`);
+                    cart.push({
+                        id: id,
+                        name: name,
+                        price: price,
+                        image: image,
+                        quantity: stock,
+                        stock: stock
+                    });
+                } else {
+                    cart.push({
+                        id: id,
+                        name: name,
+                        price: price,
+                        image: image,
+                        quantity: requestedQuantity,
+                        stock: stock
+                    });
+                }
             }
 
             saveCart();
@@ -495,15 +501,22 @@
         }
 
         function updateCartCount() {
+            if (!currentUserId) {
+                document.getElementById('cart-count').innerText = 0;
+                return;
+            }
             const count = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-count').innerText = count;
         }
 
         function updateCartUI() {
+            if (!currentUserId) return;
+
             const container = document.getElementById('cart-items-container');
             const subtotalEl = document.getElementById('cart-subtotal');
             const taxEl = document.getElementById('cart-tax');
             const totalEl = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
 
             if (cart.length === 0) {
                 container.innerHTML = `
@@ -517,7 +530,15 @@
                 subtotalEl.innerText = 'Rp 0';
                 taxEl.innerText = 'Rp 0';
                 totalEl.innerText = 'Rp 0';
+                
+                if (checkoutBtn) {
+                   checkoutBtn.classList.add('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                }
                 return;
+            }
+            
+            if (checkoutBtn) {
+               checkoutBtn.classList.remove('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
             }
 
             let subtotal = 0;
@@ -556,8 +577,18 @@
         }
 
         function updateQty(index, change) {
-            cart[index].quantity += change;
-            if (cart[index].quantity < 1) cart[index].quantity = 1;
+            const item = cart[index];
+            const newQuantity = item.quantity + change;
+            
+            if (newQuantity < 1) {
+                item.quantity = 1;
+            } else if (newQuantity > item.stock) {
+                alert(`Stok tidak mencukupi untuk ${item.name}. Maksimal stok: ${item.stock}`);
+                item.quantity = item.stock;
+            } else {
+                item.quantity = newQuantity;
+            }
+            
             saveCart();
             updateCartUI();
             updateCartCount();
@@ -571,7 +602,9 @@
         }
 
         function saveCart() {
-            localStorage.setItem('cart', JSON.stringify(cart));
+            if (cartKey) {
+                localStorage.setItem(cartKey, JSON.stringify(cart));
+            }
         }
 
         // Initialize on load

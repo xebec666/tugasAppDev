@@ -38,7 +38,7 @@
         <h1 class="text-2xl font-bold text-gray-900 mb-6">Riwayat Transaksi</h1>
 
         <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-            @if($transactions->count() > 0)
+            @if($orders->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -51,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($transactions as $transaction)
+                        @foreach($orders as $transaction)
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 #{{ $transaction->id }}
@@ -76,7 +76,7 @@
                 </table>
             </div>
             <div class="p-4 border-t border-gray-200">
-                {{ $transactions->links() }}
+                {{ $orders->links() }}
             </div>
             @else
             <div class="p-8 text-center text-gray-500">

@@ -12,10 +12,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with(['reviews.user'])->withAvg('reviews', 'rating')->findOrFail($id);
         
         // Setup related products or other view data if needed
-        $relatedProducts = Product::where('id', '!=', $id)->inRandomOrder()->take(4)->get();
+        $relatedProducts = Product::where('id', '!=', $id)->withAvg('reviews', 'rating')->inRandomOrder()->take(4)->get();
 
         return view('products.show', compact('product', 'relatedProducts'));
     }
