@@ -16,7 +16,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('admin.products.create');
+        $categories = \App\Models\Category::orderBy('name')->get();
+        return view('admin.products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -26,6 +27,7 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric|min:1',
             'stock' => 'required|integer|min:1',
+            'category' => 'required|string',
             'image' => 'nullable|image',
         ]);
 
@@ -42,7 +44,8 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        $categories = \App\Models\Category::orderBy('name')->get();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, Product $product)
@@ -52,6 +55,7 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric|min:1',
             'stock' => 'required|integer|min:1',
+            'category' => 'required|string',
             'image' => 'nullable|image',
         ]);
 

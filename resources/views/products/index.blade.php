@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Grocery - Order Your Daily Groceries</title>
+    <title>All Products - E-Grocery</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -24,9 +24,9 @@
                     <span class="text-2xl font-bold text-gray-800">E-Grocery</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-green-500 font-medium hover:text-green-600">Home</a>
+                    <a href="{{ route('home') }}" class="text-gray-600 hover:text-green-500">Home</a>
+                    <a href="{{ route('products.index') }}" class="text-green-500 font-medium hover:text-green-600">Products</a>
                     <a href="#" class="text-gray-600 hover:text-green-500">Categories</a>
-                    <a href="#" class="text-gray-600 hover:text-green-500">Our Offering</a>
                     <a href="#" class="text-gray-600 hover:text-green-500">Our App</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -55,43 +55,41 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-green-100 to-green-50 py-16">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0">
-                    <h1 class="text-5xl font-bold text-gray-800 mb-4">Order your<br>Daily Groceries</h1>
-                    <p class="text-green-500 text-xl mb-8">#Free Delivery</p>
-                    <div class="relative max-w-md">
-                        <input type="text" placeholder="Search your daily groceries..." class="w-full px-6 py-4 rounded-full border-2 border-gray-200 focus:border-green-500 focus:outline-none">
-                        <button class="absolute right-2 top-2 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600">Search</button>
-                    </div>
-                </div>
-                <div class="md:w-1/2 relative">
-                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=600&fit=crop" alt="Groceries" class="rounded-3xl shadow-2xl">
-                    <div class="absolute -bottom-4 -left-4 w-24 h-24 hidden md:block">
-                        
-                    </div>
-                    <div class="absolute top-8 -right-4 w-20 h-20 hidden md:block">
-                        <img src="https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=80&h=80&fit=crop" alt="Avocado" class="rounded-full shadow-lg">
-                    </div>
-                </div>
+    <!-- Breadcrumb -->
+    <section class="bg-white border-b">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center space-x-2 text-sm">
+                <a href="{{ route('home') }}" class="text-gray-500 hover:text-green-500">Home</a>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <span class="text-gray-800 font-medium">All Products</span>
             </div>
         </div>
     </section>
 
-    <!-- Categories -->
-    <section class="py-16 bg-white">
+    <!-- Page Header -->
+    <section class="bg-gradient-to-br from-green-100 to-green-50 py-12">
         <div class="container mx-auto px-6">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">Category</h2>
-            </div>
-            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                <a href="{{ route('home') }}" class="px-8 py-4 {{ !isset($selectedCategory) ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700' }} rounded-full font-semibold hover:bg-green-500 hover:text-white transition-all shadow-sm hover:shadow-md text-center">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">All Products</h1>
+            <p class="text-gray-600 mb-6">Discover our complete range of fresh and healthy groceries</p>
+            
+            <!-- Search Bar -->
+            <form method="GET" action="{{ route('products.index') }}" class="max-w-2xl mb-6">
+                <input type="hidden" name="category" value="{{ request('category') }}">
+                <div class="relative">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search for products..." class="w-full px-6 py-4 rounded-full border-2 border-gray-200 focus:border-green-500 focus:outline-none">
+                    <button type="submit" class="absolute right-2 top-2 bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600">Search</button>
+                </div>
+            </form>
+
+            <!-- Category Filter -->
+            <div class="flex flex-wrap gap-3">
+                <a href="{{ route('products.index', ['search' => request('search')]) }}" class="px-6 py-2 {{ !request('category') ? 'bg-green-500 text-white' : 'bg-white text-gray-700 border border-gray-300' }} rounded-full font-medium hover:bg-green-500 hover:text-white transition-all shadow-sm text-sm">
                     All
                 </a>
                 @foreach($categories as $category)
-                    <a href="{{ route('home', ['category' => $category->name]) }}" class="px-8 py-4 {{ isset($selectedCategory) && $selectedCategory == $category->name ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700' }} rounded-full font-semibold hover:bg-green-500 hover:text-white transition-all shadow-sm hover:shadow-md text-center">
+                    <a href="{{ route('products.index', ['category' => $category->name, 'search' => request('search')]) }}" class="px-6 py-2 {{ request('category') == $category->name ? 'bg-green-500 text-white' : 'bg-white text-gray-700 border border-gray-300' }} rounded-full font-medium hover:bg-green-500 hover:text-white transition-all shadow-sm text-sm">
                         {{ $category->name }}
                     </a>
                 @endforeach
@@ -99,179 +97,80 @@
         </div>
     </section>
 
-
-    <!-- Popular Products -->
+    <!-- Products Grid -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-6">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">Popular Product</h2>
-                <a href="{{ route('products.index') }}" class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors">See All</a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                @forelse($products as $product)
-                <!-- Product Card -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition flex flex-col h-full">
-                    <div class="relative h-48 mb-4 overflow-hidden rounded-xl">
+            @if($products->count() > 0)
+                <div class="mb-6 flex items-center justify-between">
+                    <p class="text-gray-600">Showing <span class="font-semibold">{{ $products->firstItem() }}</span> to <span class="font-semibold">{{ $products->lastItem() }}</span> of <span class="font-semibold">{{ $products->total() }}</span> products</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    @foreach($products as $product)
+                    <!-- Product Card -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition flex flex-col h-full">
+                        <div class="relative h-48 mb-4 overflow-hidden rounded-xl">
+                            <a href="{{ route('products.show', $product->id) }}">
+                                @if($product->image)
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
+                                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    </div>
+                                @endif
+                            </a>
+                        </div>
+                        
                         <a href="{{ route('products.show', $product->id) }}">
-                            @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
-                            @else
-                                <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
-                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                </div>
-                            @endif
+                            <h3 class="text-lg font-semibold text-gray-800 mb-1 line-clamp-1" title="{{ $product->name }}">{{ $product->name }}</h3>
                         </a>
-                    </div>
-                    
-                    <a href="{{ route('products.show', $product->id) }}">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-1 line-clamp-1" title="{{ $product->name }}">{{ $product->name }}</h3>
-                    </a>
-                    
-                    <div class="flex items-center mb-2">
-                        <div class="flex text-yellow-400 text-xs">
-                            @for($i = 1; $i <= 5; $i++)
-                                <svg class="w-3 h-3 {{ $i <= round($product->reviews_avg_rating) ? 'fill-current' : 'text-gray-300' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                                </svg>
-                            @endfor
-                        </div>
-                        <span class="text-xs text-gray-400 ml-1">({{ $product->reviews_avg_rating ? number_format($product->reviews_avg_rating, 1) : '0' }})</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mb-3 line-clamp-2 min-h-[40px]">{{ $product->description }}</p>
-                    
-                    <div class="mt-auto flex items-center justify-between">
-                        <span class="text-xl font-bold text-gray-800">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                        <div class="flex items-center space-x-2">
-                            @if($product->stock > 0)
-                                <input type="number" id="qty-{{ $product->id }}" min="1" max="{{ $product->stock }}" value="1" class="w-12 text-center border border-gray-300 rounded-lg py-1 focus:ring-green-500 focus:border-green-500">
-                                <!-- Add to Cart functionality -->
-                                <button onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }}, '{{ $product->image ? asset('storage/' . $product->image) : '' }}', {{ $product->stock }})" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-xs">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <svg class="w-3 h-3 {{ $i <= round($product->reviews_avg_rating) ? 'fill-current' : 'text-gray-300' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
                                     </svg>
-                                </button>
-                            @else
-                                <span class="text-xs text-red-600 font-semibold bg-red-50 px-3 py-1 rounded-full">Stok Habis</span>
-                            @endif
+                                @endfor
+                            </div>
+                            <span class="text-xs text-gray-400 ml-1">({{ $product->reviews_avg_rating ? number_format($product->reviews_avg_rating, 1) : '0' }})</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-3 line-clamp-2 min-h-[40px]">{{ $product->description }}</p>
+                        
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xl font-bold text-gray-800">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                            <div class="flex items-center space-x-2">
+                                @if($product->stock > 0)
+                                    <input type="number" id="qty-{{ $product->id }}" min="1" max="{{ $product->stock }}" value="1" class="w-12 text-center border border-gray-300 rounded-lg py-1 focus:ring-green-500 focus:border-green-500">
+                                    <!-- Add to Cart functionality -->
+                                    <button onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }}, '{{ $product->image ? asset('storage/' . $product->image) : '' }}', {{ $product->stock }})" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        </svg>
+                                    </button>
+                                @else
+                                    <span class="text-xs text-red-600 font-semibold bg-red-50 px-3 py-1 rounded-full">Stok Habis</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                @empty
-                <div class="col-span-1 md:col-span-4 text-center py-10">
-                    <p class="text-gray-500 text-lg">Belum ada produk yang tersedia.</p>
-                </div>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
-    <!-- Popular Bundle Pack -->
-    <section class="py-16 bg-gradient-to-br from-green-50 to-green-100">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8">Popular Bundle Pack</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Bundle Card 1 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition opacity-75 relative">
-                    <div class="absolute top-4 right-4 z-10">
-                        <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">Stok Habis</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=300&h=300&fit=crop" alt="Medium Box" class="w-full h-48 object-cover rounded-xl mb-4 grayscale">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-1">Medium Box</h3>
-                    <p class="text-sm text-gray-500 mb-3">Cabbage 1x, Cauliflower</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xl font-bold text-gray-400">$55</span>
-                        <div class="flex items-center space-x-2">
-                            <button disabled class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-300 cursor-not-allowed">-</button>
-                            <span class="font-medium text-gray-300">0</span>
-                            <button disabled class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-300 cursor-not-allowed">+</button>
-                            <button disabled class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white cursor-not-allowed">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
-                <!-- Bundle Card 2 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition opacity-75 relative">
-                    <div class="absolute top-4 right-4 z-10">
-                        <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">Stok Habis</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=300&h=300&fit=crop" alt="Big Pack" class="w-full h-48 object-cover rounded-xl mb-4 grayscale">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-1">Big Pack</h3>
-                    <p class="text-sm text-gray-500 mb-3">Cabbage 1x, Cauliflower</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xl font-bold text-gray-400">$55</span>
-                        <div class="flex items-center space-x-2">
-                            <button disabled class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-300 cursor-not-allowed">-</button>
-                            <span class="font-medium text-gray-300">0</span>
-                            <button disabled class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-300 cursor-not-allowed">+</button>
-                            <button disabled class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white cursor-not-allowed">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                <!-- Pagination -->
+                <div class="mt-12">
+                    {{ $products->links() }}
                 </div>
-
-                <!-- Bundle Card 3 -->
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition opacity-75 relative">
-                    <div class="absolute top-4 right-4 z-10">
-                        <span class="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">Stok Habis</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=300&h=300&fit=crop" alt="Small" class="w-full h-48 object-cover rounded-xl mb-4 grayscale">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-1">Small</h3>
-                    <p class="text-sm text-gray-500 mb-3">Cabbage 1x, Cauliflower</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xl font-bold text-gray-400">$55</span>
-                        <div class="flex items-center space-x-2">
-                            <button disabled class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-300 cursor-not-allowed">-</button>
-                            <span class="font-medium text-gray-300">0</span>
-                            <button disabled class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-300 cursor-not-allowed">+</button>
-                            <button disabled class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white cursor-not-allowed">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Healthy Food Partners -->
-    <section class="py-12 bg-white">
-        <div class="container mx-auto px-6">
-            <h3 class="text-center text-gray-500 text-sm font-semibold mb-6 uppercase tracking-wider">Trusted by Health-Conscious Brands</h3>
-            <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-                <div class="flex items-center space-x-2 opacity-60 hover:opacity-100 transition-opacity">
-                    <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+            @else
+                <div class="text-center py-20">
+                    <svg class="w-24 h-24 mx-auto mb-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
                     </svg>
-                    <span class="text-xl font-bold text-gray-700">ORGANIC PLUS</span>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">No Products Found</h3>
+                    <p class="text-gray-600 mb-6">Try adjusting your search or filters</p>
+                    <a href="{{ route('products.index') }}" class="inline-block px-6 py-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors">View All Products</a>
                 </div>
-                <div class="flex items-center space-x-2 opacity-60 hover:opacity-100 transition-opacity">
-                    <svg class="w-8 h-8 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    <span class="text-xl font-bold text-gray-700">FRESH HARVEST</span>
-                </div>
-                <div class="flex items-center space-x-2 opacity-60 hover:opacity-100 transition-opacity">
-                    <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                    <span class="text-xl font-bold text-gray-700">WELLNESS FOODS</span>
-                </div>
-                <div class="flex items-center space-x-2 opacity-60 hover:opacity-100 transition-opacity">
-                    <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
-                    </svg>
-                    <span class="text-xl font-bold text-gray-700">NUTRI CAROUSEL</span>
-                </div>
-            </div>
+            @endif
         </div>
     </section>
 
@@ -308,6 +207,7 @@
             </div>
         </div>
     </footer>
+
     <!-- Cart Sidebar -->
     <div id="cart-sidebar" class="fixed inset-0 z-50 hidden">
         <!-- Overlay -->

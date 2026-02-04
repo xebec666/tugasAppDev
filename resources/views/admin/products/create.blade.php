@@ -108,6 +108,19 @@
                 @enderror
             </div>
 
+            <div class="mb-4">
+                <label for="category" class="form-label">Kategori</label>
+                <select class="form-control @error('category') is-invalid @enderror" id="category" name="category" required>
+                    <option value="">Pilih Kategori</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->name }}" {{ old('category') == $cat->name ? 'selected' : '' }}>{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+                @error('category')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <label for="price" class="form-label">Harga (Rp)</label>

@@ -132,6 +132,19 @@
                 @enderror
             </div>
 
+            <div class="mb-4">
+                <label for="category" class="form-label">Kategori</label>
+                <select class="form-control @error('category') is-invalid @enderror" id="category" name="category" required>
+                    <option value="">Pilih Kategori</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->name }}" {{ old('category', $product->category) == $cat->name ? 'selected' : '' }}>{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+                @error('category')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="mb-5">
                 <label for="image" class="form-label">Gambar Produk</label>
                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
